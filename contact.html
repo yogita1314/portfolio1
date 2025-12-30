@@ -129,7 +129,8 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form  method="post" id="form" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                <div id="res" style="color: green; font-size: 14px;"></div>
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -143,8 +144,8 @@
                 </div>
 
                 <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
+                  <label for="subject-field" class="pb-2">Phone</label>
+                  <input type="text" class="form-control" name="phone" id="subject-field" required="">
                 </div>
 
                 <div class="col-md-12">
@@ -153,11 +154,11 @@
                 </div>
 
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
+                  <!-- <div class="loading">Loading</div>
                   <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
+                  <div class="sent-message">Your message has been sent. Thank you!</div> -->
 
-                  <button type="submit">Send Message</button>
+                  <button type="submit" name="btn">Send Message</button>
                 </div>
 
               </div>
@@ -208,6 +209,26 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script>
+    let url='https://script.google.com/macros/s/AKfycbx9Ujtgfid1EuT1AoSMAddBo2fP_dSC75Z3VmPhL8C72C24g5r1Vlvmo8s2_rxUzr2M/exec'
+    let form=document.querySelector('#form');
+    form.addEventListener("submit",(e)=>{
+     e.target.btn.innerHTML="Submitting....";
+     let d=new FormData(form);
+     fetch(url,{
+        method:"POST",
+        body:d
+     }).then((res)=>res.text())
+     .then((finalRes)=>{
+        e.target.btn.innerHTML="Submit";
+        document.getElementById("res").innerHTML=finalRes;
+        form.reset();
+        setTimeout(()=>{
+            document.getElementById("res").innerHTML=" ";
+        },5000)
+     })
+    })
+</script>
 
 </body>
 
